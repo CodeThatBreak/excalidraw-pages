@@ -1,5 +1,3 @@
-// pages/api/graphql.ts
-
 import { createSchema, createYoga } from "graphql-yoga";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { resolvers } from "../../graphql/resolvers";
@@ -23,4 +21,6 @@ export const config = {
   },
 };
 
+// Todo: Figure out how to do this
+// @ts-ignore
 await dbInit();

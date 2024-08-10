@@ -1,17 +1,20 @@
-import { useCallback, useMemo, useRef } from "react";
-import { getRelativeTime } from "@/app/utils/dateTime/getRelativeTime";
-import { Card, CardContent } from "@/components/ui/card";
-//import { Card } from "@radix-ui/themes";
-
-import { FileTextIcon } from "lucide-react";
-import { DateTime } from "luxon";
+import { useMemo } from "react";
 import Link from "next/link";
-import { Scene } from "@/components/scene/types";
-
-import { Typography } from "@/components/ui/typography";
 import dynamic from "next/dynamic";
-import { Box, Heading, Text } from "@radix-ui/themes";
+import { DateTime } from "luxon";
+
+// Components
 import { TruncateWithTooltip } from "@/components/ui/TruncateWithTooltip";
+import { Card, Inset, Box, Heading, Text } from "@radix-ui/themes";
+
+// Utils
+import { getRelativeTime } from "@/app/utils/dateTime/getRelativeTime";
+
+// Icon
+import { FileTextIcon } from "lucide-react";
+
+// Type
+import type { Scene } from "@/components/scene/types";
 
 const Preview = dynamic(() => import("./Preview").then((m) => m.Preview), {
   ssr: false,
@@ -39,8 +42,10 @@ const SceneCard = ({ scene }: Props): JSX.Element => {
   return (
     <Link href={`/scene/${id}`}>
       <Card className="group">
-        <Preview scene={scene} />
-        <CardContent className="px-4 py-2 border-t-2 border-muted">
+        <Inset>
+          <Preview scene={scene} />
+        </Inset>
+        <Box className="px-4 py-2 border-t-2 border-muted">
           <TruncateWithTooltip content={name}>
             <Heading truncate size="4" className="font-medium text-lg truncate">
               {name}
@@ -56,7 +61,7 @@ const SceneCard = ({ scene }: Props): JSX.Element => {
               <Text truncate> {relativeUpdateTime}</Text>
             </TruncateWithTooltip>
           </div>
-        </CardContent>
+        </Box>
       </Card>
     </Link>
   );

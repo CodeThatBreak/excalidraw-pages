@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { ActionType } from "@/components/scene/constants/actionTypes";
 
 // Component
-import { Input } from "@/components/ui/input";
+import { TextField } from "@radix-ui/themes";
 
 // Types
 import type { Scene } from "@/components/scene/types";
@@ -30,7 +30,7 @@ const TitleInput = ({ scene, onAction }: Props) => {
   const debouncedOnChange = useDebounceCallback(onChange, 200);
 
   return (
-    <Input
+    <TextField.Root
       className="absolute z-10 mt-4 ml-28 w-64"
       defaultValue={scene.name}
       onChange={debouncedOnChange}

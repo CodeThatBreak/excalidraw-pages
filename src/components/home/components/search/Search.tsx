@@ -1,6 +1,12 @@
-import { Spinner, TextField } from "@radix-ui/themes";
+import type { ChangeEvent } from "react";
+
+// Components
+import { Box, Spinner, TextField } from "@radix-ui/themes";
+
+// Icons
 import { SearchIcon } from "lucide-react";
-import { ChangeEvent } from "react";
+
+// Hooks
 import { useDebounceCallback } from "usehooks-ts";
 
 type Props = {
@@ -17,9 +23,9 @@ const Search = ({ onSearch, loading }: Props) => {
   );
 
   return (
-    <div className="relative flex-1">
+    <Box className="flex-1">
       <TextField.Root
-        placeholder="Search scene..."
+        placeholder="Search drawing..."
         className="w-full"
         onChange={debouncedOnChange}
       >
@@ -30,7 +36,7 @@ const Search = ({ onSearch, loading }: Props) => {
           <Spinner loading={loading} />
         </TextField.Slot>
       </TextField.Root>
-    </div>
+    </Box>
   );
 };
 

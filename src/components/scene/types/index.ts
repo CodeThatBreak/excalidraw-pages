@@ -1,6 +1,6 @@
 // Type
-import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
-import type { AppState } from "@excalidraw/excalidraw/types/types";
+import type { ExcalidrawElement } from "@excalidraw/excalidraw/dist/excalidraw/element/types";
+import type { AppState } from "@excalidraw/excalidraw/dist/excalidraw/types";
 
 type Scene = {
   id: string;

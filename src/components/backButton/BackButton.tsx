@@ -3,20 +3,12 @@
 import { memo } from "react";
 
 // Components
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
 import { Button } from "@excalidraw/excalidraw";
 
 import { ArrowLeftToLine } from "lucide-react";
 import { useRouter } from "next/router";
 
-const DrawingSelector = memo((): JSX.Element => {
+const BackButton = memo((): JSX.Element => {
   const router = useRouter();
   return (
     <Button
@@ -28,6 +20,6 @@ const DrawingSelector = memo((): JSX.Element => {
   );
 });
 
-DrawingSelector.displayName = "DrawingSelector";
+BackButton.displayName = "BackButton";
 
-export { DrawingSelector };
+export { BackButton };

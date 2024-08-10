@@ -6,7 +6,6 @@ import { useCallback, useLayoutEffect, useState } from "react";
 import { Loading } from "@/components/loading/Loading";
 
 // Hooks
-import { useSyncScene } from "./hooks/useSyncScene";
 import { useUpdateSceneMutation } from "./mutation/useUpdateSceneMutation";
 
 // Constant
@@ -24,10 +23,9 @@ const Excalidraw = dynamic(
 
 type Props = {
   scene: Scene;
-  loading: boolean;
 };
 
-const Scene = ({ scene, loading }: Props) => {
+const Scene = ({ scene }: Props) => {
   const [excalidrawAPI, excalidrawRefCallback] =
     useState<ExcalidrawImperativeAPI | null>(null);
 
@@ -61,9 +59,7 @@ const Scene = ({ scene, loading }: Props) => {
     [updateSceneMutation]
   );
 
-  useSyncScene({ excalidrawAPI, updateSceneMutation });
-
-  const showLoader = !excalidrawAPI || loading;
+  const showLoader = !excalidrawAPI;
 
   return (
     <>

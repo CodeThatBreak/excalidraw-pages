@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSidePropsContext, NextPage } from "next";
 
 // Hooks
 import { getScene } from "@/components/scene/query/useInitialScene";
@@ -6,18 +6,36 @@ import { getScene } from "@/components/scene/query/useInitialScene";
 // Components
 import { Scene as BaseScene } from "@/components/scene/Scene";
 
-type PageProps = { params: { id: string } };
+// Type
+import type { Scene } from "@/components/scene/types";
+
+type PageProps = { scene: Scene };
 
 const Scene: NextPage<PageProps> = ({ scene }) => {
-  return <BaseScene scene={scene} loading={false} />;
+  return <BaseScene scene={scene} />;
 };
 
-export const getServerSideProps = async (context) => {
-  const { id } = context.query;
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const id = context.query.id as string;
 
-  const { data, loading } = await getScene(id);
+  try {
+    const { data } = await getScene(id);
 
-  return { props: { scene: data } };
+    if (!data) {
+      return {
+        redirect: { destination: "/home" },
+      };
+    }
+
+    return { props: { scene: data } };
+  } catch (err) {
+    console.error("Error fetching scene", err);
+    return {
+      redirect: { destination: "/home" },
+    };
+  }
 };
 
 export default Scene;

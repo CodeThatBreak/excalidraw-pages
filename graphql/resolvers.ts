@@ -1,71 +1,106 @@
-// resolvers.js
+import { DateTime } from "luxon";
 import { GraphQLJSON, GraphQLDateTime } from "graphql-scalars";
 import { Scene } from "../model/scene";
 import { Op } from "sequelize";
-import { DateTime } from "luxon";
+import { GraphQLError } from "graphql";
+
+interface FetchSceneArgs {
+  id: string;
+}
+
+interface FetchScenesArgs {
+  searchQuery?: string;
+}
+
+interface UpdateSceneArgs {
+  id: string;
+  name: string;
+  version: number;
+  elements: any[];
+  state: any;
+}
+
+enum ErrorType {
+  SCENE_NOT_FOUND = "SCENE_NOT_FOUND",
+}
 
 const resolvers = {
   Query: {
-    fetchScene: async (_, args) => {
+    fetchScene: async (_: any, args: FetchSceneArgs) => {
       const { id } = args;
-      console.log(_, args);
-      const scene = await Scene.findByPk(id);
-
-      if (!scene) {
-        throw new Error("Error creating scene");
+      try {
+        const scene = await Scene.findByPk(id);
+        if (!scene) {
+          return Promise.reject(
+            new GraphQLError(
+              `ERROR_CODE:${ErrorType.SCENE_NOT_FOUND}. Failed to fetch scene. `
+            )
+          );
+        }
+        return scene;
+      } catch (error) {
+        return Promise.reject(new GraphQLError(`Unexpected error occured`));
       }
-      return scene;
     },
-    fetchScenes: async (_, args) => {
+    fetchScenes: async (_: any, args: FetchScenesArgs) => {
       const { searchQuery } = args;
-
-      const scenes = await Scene.findAll({
-        order: [["updatedAt", "DESC"]],
-        where: searchQuery ? { name: { [Op.like]: `%${searchQuery}%` } } : {},
-      });
-      if (!scenes) {
-        throw new Error("Error finding scenes");
+      try {
+        const scenes = await Scene.findAll({
+          order: [["updatedAt", "DESC"]],
+          where: searchQuery ? { name: { [Op.like]: `%${searchQuery}%` } } : {},
+        });
+        if (!scenes.length) {
+          return []; // Return an empty array if no scenes are found
+        }
+        return scenes;
+      } catch (error) {
+        console.error("Error fetching scenes:", error);
+        throw new Error("Failed to fetch scenes");
       }
-      return scenes;
     },
   },
   JSON: GraphQLJSON,
   Date: GraphQLDateTime,
 
-  // JSONResolver,
   Mutation: {
-    updateScene: async (parent, args, context, info) => {
+    updateScene: async (_: any, args: UpdateSceneArgs) => {
       const { id, name, version, elements, state } = args;
-
       try {
-        const up = await Scene.update(
+        const [affectedRowCount] = await Scene.update(
           { name, version, elements, state },
-          {
-            where: { id: id },
-            returning: ["version"],
-          }
+          { where: { id } }
         );
 
-        return version;
+        if (affectedRowCount === 0) {
+          throw new Error(`Scene with ID ${id} not found`);
+        }
+
+        return "";
       } catch (error) {
         console.error("Error updating scene:", error);
-        throw error;
+        throw new Error("Failed to update scene");
       }
     },
     createScene: async () => {
-      const createdScene = await Scene.create({
-        name: `Untitled ${DateTime.fromJSDate(new Date()).toFormat(
-          "yyyy-LL-dd-hhmm"
-        )}`,
-        version: Date.now(),
-        elements: [],
-        state: { zoom: { value: 1 } },
-      });
+      try {
+        const createdScene = await Scene.create({
+          name: `Untitled_${DateTime.fromJSDate(new Date()).toFormat(
+            "yyyy-MM-dd_HHmmss"
+          )}`,
+          version: Date.now(),
+          elements: [],
+          state: { zoom: { value: 1 } },
+        });
 
-      if (!createdScene) {
-        throw new Error("Error creating scene");
+        if (!createdScene) {
+          throw new Error("Failed to create scene");
+        }
+
+        return createdScene.id;
+      } catch (error) {
+        console.error("Error creating scene:", error);
+        throw new Error("Failed to create scene");
       }
-      return createdScene.id;
     },
   },
 };

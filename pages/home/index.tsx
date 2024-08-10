@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { NetworkStatus } from "@apollo/client";
 
 // Components
-import { Box } from "@radix-ui/themes";
+import { Heading, Flex, Box } from "@radix-ui/themes";
 import { Layout } from "@/components/layout/Layout";
 import { Search } from "@/components/home/components/search/Search";
 import { NoData } from "@/components/home/components/noData/NoData";
@@ -31,13 +31,13 @@ export default function Home() {
   return (
     <Layout>
       <Layout.Header>
-        <div className="w-full gap-2 flex-1 flex flex-row justify-end">
-          <Box className="flex-1">Scenes</Box>
+        <Flex className="w-full">
+          <Heading className="flex-1">Drawings</Heading>
           <Search loading={searching} onSearch={searchScenes} />
-          <div className="flex-1 ml-auto flex justify-end">
+          <Flex className="flex-1" justify="end">
             <AddScene />
-          </div>
-        </div>
+          </Flex>
+        </Flex>
       </Layout.Header>
       <Layout.Main>{mainContent}</Layout.Main>
     </Layout>

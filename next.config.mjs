@@ -7,7 +7,7 @@ const nextConfig = {
     localeDetection: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    //  ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

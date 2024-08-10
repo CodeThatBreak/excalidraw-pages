@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 import apolloClient from "@/lib/apollo";
 
-export const FetchSceneQuery = gql`
+export const FETCH_SCENE_QUERY = gql`
   query fetchScene($id: String!) {
     fetchScene(id: $id) {
       id
@@ -15,7 +15,7 @@ export const FetchSceneQuery = gql`
 
 export const getScene = async (id: string) => {
   const { data, ...rest } = await apolloClient.query({
-    query: FetchSceneQuery,
+    query: FETCH_SCENE_QUERY,
     variables: { id },
     fetchPolicy: "no-cache",
   });

@@ -3,7 +3,7 @@ import { useMemo, useCallback, useRef } from "react";
 // Components
 import { AppMainMenu } from "@/components/excalidraw/components/mainMenu";
 import { TitleInput } from "./components/titleInput/TitleInput";
-import { DrawingSelector } from "@/components/drawingSelector";
+import { BackButton } from "@/components/backButton";
 import {
   Excalidraw as BaseExcalidraw,
   getNonDeletedElements,
@@ -57,7 +57,7 @@ const Excalidraw = ({
     initialData.elements
   );
 
-  const previousStateRef = useRef<AppState>(initialData.appState);
+  const previousStateRef = useRef<Partial<AppState>>(initialData.appState);
 
   const onChange = useCallback(
     (elements: readonly OrderedExcalidrawElement[], appState: AppState) => {
@@ -113,7 +113,7 @@ const Excalidraw = ({
         name={scene.name}
       >
         <AppMainMenu />
-        <DrawingSelector />
+        <BackButton />
       </BaseExcalidraw>
     </>
   );

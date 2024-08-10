@@ -1,8 +1,10 @@
 import { useCallback } from "react";
 import { useMutation, gql, FetchResult } from "@apollo/client";
-import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
-import { AppState } from "@excalidraw/excalidraw/types/types";
-import { Scene } from "../types";
+
+// Types
+import type { Scene } from "../types";
+
+// Fragement
 import { SCENE_FRAGMENT } from "@/fragments/scene";
 
 const UPDATE_SCENE_MUTATION = gql`
@@ -24,9 +26,9 @@ export type UpdateSceneMutation = (
   variables: Omit<Variables, "id">
 ) => Promise<FetchResult<Variables>>;
 
-const useUpdateSceneMutation = (id: string): Return => {
+const useUpdateSceneMutation = (id: string): UpdateSceneMutation => {
   const [updateSceneMutation] = useMutation<Variables>(UPDATE_SCENE_MUTATION, {
-    update: (cache, result, { variables }) => {
+    update: (cache, _, { variables }) => {
       if (!variables) {
         return;
       }
@@ -41,7 +43,7 @@ const useUpdateSceneMutation = (id: string): Return => {
         fragment: SCENE_FRAGMENT,
       });
 
-      const data = {};
+      const data: Partial<Scene> = {};
 
       if (variables.elements) {
         data.elements = variables.elements;
