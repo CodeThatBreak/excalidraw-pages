@@ -1,0 +1,1 @@
+export { AppMainMenu } from "./MainMenu";
