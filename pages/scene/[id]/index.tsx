@@ -33,7 +33,7 @@ export const getServerSideProps = async (
 
     if (!data) {
       return {
-        redirect: { destination: "/home" },
+        redirect: { destination: "/" },
       };
     }
 
@@ -41,7 +41,7 @@ export const getServerSideProps = async (
   } catch (err) {
     console.error("Error fetching scene", err);
     return {
-      redirect: { destination: "/home" },
+      redirect: { destination: "/" },
     };
   }
 };

@@ -11,7 +11,7 @@ const _noop = () => undefined;
 
 const BackButton = memo((): JSX.Element => {
   return (
-    <Link href="/home">
+    <Link href="/">
       <Button
         onSelect={_noop}
         className="dropdown-menu-button main-menu-trigger zen-mode-transition absolute !w-9 !h-9 top-4 left-4 z-10"
