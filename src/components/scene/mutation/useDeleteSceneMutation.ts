@@ -11,7 +11,7 @@ const DELETE_SCENE_MUTATION = gql`
   }
 `;
 
-type Return = [(id: string) => Promise<FetchResult<any>>, boolean];
+type Return = [(id: string) => Promise<FetchResult<boolean>>, boolean];
 
 const useDeleteSceneMutation = (): Return => {
   const [deleteSceneMutation, { loading }] = useMutation(

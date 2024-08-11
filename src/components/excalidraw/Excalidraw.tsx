@@ -3,7 +3,7 @@ import { useMemo, useCallback, useRef } from "react";
 // Components
 import { AppMainMenu } from "@/components/excalidraw/components/mainMenu";
 import { TitleInput } from "./components/titleInput";
-import { BackButton } from "@/components/backButton";
+import { BackButton } from "@/components/excalidraw/components/backButton";
 import {
   Excalidraw as BaseExcalidraw,
   getNonDeletedElements,

@@ -13,6 +13,7 @@ import { SceneGrid } from "@/components/home/components/sceneGrid/SceneGrid";
 
 // Custom Hooks
 import { useScenesQuery } from "@/components/home/components/sceneGrid/hook/useScenesQuery";
+import { ThemeSwitcher } from "@/components/themeSwitcher/ThemeSwitcher";
 
 export default function Home() {
   const { data, loading, searchQuery, searchScenes, networkStatus } =
@@ -37,8 +38,9 @@ export default function Home() {
         <Flex className="w-full">
           <Heading className="flex-1">Drawings</Heading>
           <Search loading={searching} onSearch={searchScenes} />
-          <Flex className="flex-1" justify="end">
+          <Flex gap="1" className="flex-1" justify="end">
             <AddScene />
+            <ThemeSwitcher />
           </Flex>
         </Flex>
       </Layout.Header>

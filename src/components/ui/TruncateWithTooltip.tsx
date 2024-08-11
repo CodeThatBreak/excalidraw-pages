@@ -1,5 +1,7 @@
-import { Box, Tooltip } from "@radix-ui/themes";
 import { ReactNode, useCallback, useRef, useState } from "react";
+
+// Components
+import { Box, Tooltip } from "@radix-ui/themes";
 
 type Props = {
   children: ReactNode;

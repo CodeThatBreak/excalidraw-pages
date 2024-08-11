@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 // Components
-import { Loading } from "@/components/loading/Loading";
+import { Box } from "@radix-ui/themes";
+import { FullScreenLoader } from "@/components/loader";
 
 // Hooks
 import { useUpdateSceneMutation } from "./mutation/useUpdateSceneMutation";
@@ -21,19 +22,11 @@ const Excalidraw = dynamic(
   { ssr: false }
 );
 
-type Props = {
-  scene: Scene;
-};
+type Props = { scene: Scene };
 
 const Scene = ({ scene }: Props) => {
   const [excalidrawAPI, excalidrawRefCallback] =
     useState<ExcalidrawImperativeAPI | null>(null);
-
-  useLayoutEffect(() => {
-    return () => {
-      excalidrawAPI && excalidrawRefCallback(null);
-    };
-  }, [excalidrawAPI]);
 
   const updateSceneMutation = useUpdateSceneMutation(scene.id);
 
@@ -63,17 +56,17 @@ const Scene = ({ scene }: Props) => {
 
   return (
     <>
-      {showLoader ? <Loading /> : null}
-      <div className={cn(showLoader ? "opacity-0" : "opacity-1")}>
-        <div className="w-dvw h-dvh">
+      {showLoader ? <FullScreenLoader /> : null}
+      <Box className={cn(showLoader ? "opacity-0" : "opacity-1")}>
+        <Box className="w-dvw h-dvh">
           <Excalidraw
             scene={scene}
             onAction={onAction}
             excalidrawAPI={excalidrawAPI}
             excalidrawRefCallback={excalidrawRefCallback}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };

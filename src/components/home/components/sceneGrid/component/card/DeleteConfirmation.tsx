@@ -1,9 +1,10 @@
+import type { MouseEventHandler } from "react";
+
 // Components
 import { IconButton, DropdownMenu } from "@radix-ui/themes";
 
 // Icons
-import { EllipsisVertical, PencilIcon, Trash2Icon } from "lucide-react";
-import { MouseEventHandler } from "react";
+import { Copy, EllipsisVertical, PencilIcon, Trash2Icon } from "lucide-react";
 
 type Props = {
   onDelete: MouseEventHandler<HTMLDivElement>;
@@ -26,6 +27,10 @@ const DeleteConfirmation = ({ onDelete, onEdit }: Props) => {
         <DropdownMenu.Item onClick={onDelete} color="red">
           <Trash2Icon size={10} />
           Delete
+        </DropdownMenu.Item>
+        <DropdownMenu.Item onClick={(e) => e.stopPropagation()} disabled>
+          <Copy size={10} />
+          Duplicate
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

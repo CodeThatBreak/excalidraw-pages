@@ -1,4 +1,4 @@
-import { EventHandler, MouseEventHandler, useCallback, useMemo } from "react";
+import { type MouseEventHandler, useCallback, useMemo } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { DateTime } from "luxon";
@@ -6,6 +6,7 @@ import { DateTime } from "luxon";
 // Components
 import { TruncateWithTooltip } from "@/components/ui/TruncateWithTooltip";
 import { Card, Inset, Box, Heading, Text, Flex } from "@radix-ui/themes";
+import { DeleteConfirmation } from "./DeleteConfirmation";
 
 // Utils
 import { getRelativeTime } from "@/app/utils/dateTime/getRelativeTime";
@@ -15,9 +16,9 @@ import { FileTextIcon } from "lucide-react";
 
 // Type
 import type { Scene } from "@/components/scene/types";
-import { DeleteConfirmation } from "./DeleteConfirmation";
-import { useDeleteSceneMutation } from "@/components/scene/mutation/useDeleteSceneMutation";
-import { OnAction } from "@/components/home/types/action";
+import type { OnAction } from "@/components/home/types/action";
+
+// Constants
 import { ActionTypes } from "@/components/home/constants/actionTypes";
 
 const Preview = dynamic(() => import("./Preview").then((m) => m.Preview), {
@@ -62,7 +63,7 @@ const SceneCard = ({ scene, onAction }: Props): JSX.Element => {
   return (
     <Link href={`/scene/${id}`}>
       <Card className="realtive">
-        <Inset className="bg-white">
+        <Inset>
           <Preview scene={scene} />
           <Box className="px-4 py-2 border-t-2 border-muted h-16">
             <Flex
