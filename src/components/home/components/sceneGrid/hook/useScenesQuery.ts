@@ -7,7 +7,7 @@ import { SCENE_FRAGMENT } from "@/fragments/scene";
 // Types
 import { Scene } from "@/components/scene/types";
 
-const FETCH_SCENES_QUERY = gql`
+export const FETCH_SCENES_QUERY = gql`
   query fetchScenes($searchQuery: String) {
     fetchScenes(searchQuery: $searchQuery) {
       ...SceneFragment
@@ -23,32 +23,30 @@ type Response = { fetchScenes: Scene[] };
 const useScenesQuery = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data, loading, error, fetchMore, networkStatus } = useQuery<
-    Response,
-    Variables
-  >(FETCH_SCENES_QUERY, {
+  const {
+    data,
+    loading: _loading,
+    error,
+    refetch,
+    networkStatus,
+  } = useQuery<Response, Variables>(FETCH_SCENES_QUERY, {
     fetchPolicy: "cache-and-network",
-    notifyOnNetworkStatusChange: true,
+    //  notifyOnNetworkStatusChange: true,
   });
 
   const searchScenes = useCallback(
     (query: string) => {
       setSearchQuery(query);
-      fetchMore({
-        variables: { searchQuery: query },
-        updateQuery: (prevResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return prevResult;
-
-          return fetchMoreResult;
-        },
+      refetch({
+        searchQuery: query,
       });
     },
-    [fetchMore]
+    [refetch]
   );
 
   return {
     data: data?.fetchScenes ?? [],
-    loading,
+    loading: !data?.fetchScenes?.length && _loading,
     error,
     searchScenes,
     searchQuery,

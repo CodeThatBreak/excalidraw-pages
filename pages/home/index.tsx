@@ -1,14 +1,14 @@
 // External Libraries
-import dynamic from "next/dynamic";
 import { NetworkStatus } from "@apollo/client";
+import Head from "next/head";
 
 // Components
-import { Heading, Flex, Box } from "@radix-ui/themes";
+import { Heading, Flex } from "@radix-ui/themes";
 import { Layout } from "@/components/layout/Layout";
 import { Search } from "@/components/home/components/search/Search";
 import { NoData } from "@/components/home/components/noData/NoData";
 import { Tombstone } from "@/components/home/components/sceneGrid/component/tombstone/Tombstone";
-import { AddScene } from "@/components/home/components/addScene/AddScene";
+import { AddScene } from "@/components/home/components/addScene";
 import { SceneGrid } from "@/components/home/components/sceneGrid/SceneGrid";
 
 // Custom Hooks
@@ -18,7 +18,7 @@ export default function Home() {
   const { data, loading, searchQuery, searchScenes, networkStatus } =
     useScenesQuery();
 
-  const searching = networkStatus === NetworkStatus.fetchMore;
+  const searching = networkStatus === NetworkStatus.refetch;
 
   let mainContent = <SceneGrid scenes={data} />;
 
@@ -31,6 +31,9 @@ export default function Home() {
   return (
     <Layout>
       <Layout.Header>
+        <Head>
+          <title>Drawings·Excalidraw</title>
+        </Head>
         <Flex className="w-full">
           <Heading className="flex-1">Drawings</Heading>
           <Search loading={searching} onSearch={searchScenes} />

@@ -8,11 +8,19 @@ import { Scene as BaseScene } from "@/components/scene/Scene";
 
 // Type
 import type { Scene } from "@/components/scene/types";
+import Head from "next/head";
 
 type PageProps = { scene: Scene };
 
 const Scene: NextPage<PageProps> = ({ scene }) => {
-  return <BaseScene scene={scene} />;
+  return (
+    <>
+      <Head>
+        <title>{scene.name}</title>
+      </Head>
+      <BaseScene scene={scene} />
+    </>
+  );
 };
 
 export const getServerSideProps = async (

@@ -2,7 +2,7 @@ import { useMemo, useCallback, useRef } from "react";
 
 // Components
 import { AppMainMenu } from "@/components/excalidraw/components/mainMenu";
-import { TitleInput } from "./components/titleInput/TitleInput";
+import { TitleInput } from "./components/titleInput";
 import { BackButton } from "@/components/backButton";
 import {
   Excalidraw as BaseExcalidraw,
@@ -111,6 +111,7 @@ const Excalidraw = ({
         initialData={initialData}
         onChange={debouncedOnChange}
         name={scene.name}
+        autoFocus={true}
       >
         <AppMainMenu />
         <BackButton />

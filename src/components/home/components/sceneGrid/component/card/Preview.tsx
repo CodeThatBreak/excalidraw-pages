@@ -20,7 +20,12 @@ const Preview = ({ scene }: Props) => {
 
       exportToSvg({
         elements: scene.elements,
-        appState: scene.state,
+        appState: {
+          theme: "dark",
+          exportWithDarkMode: true,
+          exportBackground: false,
+          viewBackgroundColor: "black",
+        },
         files: {},
         exportPadding: 24,
       }).then((svg) => {

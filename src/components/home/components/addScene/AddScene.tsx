@@ -1,5 +1,7 @@
+import { memo } from "react";
+
 // Component
-import { IconButton } from "@radix-ui/themes";
+import { Button } from "@radix-ui/themes";
 import { gql, useMutation } from "@apollo/client";
 
 // Icon
@@ -27,10 +29,13 @@ const AddScene = (): JSX.Element => {
   );
 
   return (
-    <IconButton loading={loading} onClick={() => createScene()}>
-      <PlusIcon />
-    </IconButton>
+    <Button loading={loading} onClick={() => createScene()}>
+      <PlusIcon /> Add Scene
+    </Button>
   );
 };
 
-export { AddScene };
+const MemoizedAddScene = memo(AddScene);
+MemoizedAddScene.displayName = "AddScene";
+
+export { MemoizedAddScene as AddScene };

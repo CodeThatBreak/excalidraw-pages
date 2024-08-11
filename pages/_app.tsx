@@ -8,7 +8,7 @@ import "@radix-ui/themes/styles.css";
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ApolloProvider client={apolloClient}>
-      <Theme>
+      <Theme appearance="light">
         <Component {...pageProps} />
       </Theme>
     </ApolloProvider>

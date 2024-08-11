@@ -1,7 +1,6 @@
 // /lib/apollo.ts
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 
-console.log(process.env.API_END_POINT);
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {

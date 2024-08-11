@@ -20,6 +20,10 @@ interface UpdateSceneArgs {
   state: any;
 }
 
+interface DeleteSceneArgs {
+  id: string;
+}
+
 enum ErrorType {
   SCENE_NOT_FOUND = "SCENE_NOT_FOUND",
 }
@@ -75,7 +79,7 @@ const resolvers = {
           throw new Error(`Scene with ID ${id} not found`);
         }
 
-        return "";
+        return id;
       } catch (error) {
         console.error("Error updating scene:", error);
         throw new Error("Failed to update scene");
@@ -100,6 +104,28 @@ const resolvers = {
       } catch (error) {
         console.error("Error creating scene:", error);
         throw new Error("Failed to create scene");
+      }
+    },
+    deleteScene: async (_: any, args: DeleteSceneArgs) => {
+      const { id } = args;
+
+      try {
+        const deletedRowCount = await Scene.destroy({
+          where: { id },
+        });
+
+        if (deletedRowCount === 0) {
+          return Promise.reject(
+            new GraphQLError(
+              `ERROR_CODE:${ErrorType.SCENE_NOT_FOUND}. Failed to delete scene. `
+            )
+          );
+        }
+
+        return deletedRowCount === 1;
+      } catch (error) {
+        console.error("Error updating scene:", error);
+        return Promise.reject(new GraphQLError(`Unexpected error.`));
       }
     },
   },

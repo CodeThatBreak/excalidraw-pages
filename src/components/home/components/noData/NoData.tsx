@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { PlusIcon } from "lucide-react";
+import { AddScene } from "../addScene";
 
 type Props = {
   searchQuery?: string;
@@ -33,10 +34,7 @@ const NoData = ({ searchQuery = "", onAddScene }: Props): JSX.Element => {
       <Image alt="No result" width={300} height={200} src="/canvas.svg" />
       <Heading className="mt-4">{heading}</Heading>
       <Text align="center">{description}</Text>
-      <Button mt="5" size="3" onClick={onAddScene}>
-        <PlusIcon />
-        Add Scene
-      </Button>
+      <AddScene />
     </Flex>
   );
 };

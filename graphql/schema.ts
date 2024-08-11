@@ -22,5 +22,6 @@ export const typeDefs = `
     type Mutation {
         updateScene(id: String!, name: String, elements: JSON, state: JSON): String
         createScene: String
+        deleteScene(id:String!): Boolean
     }
 `;
