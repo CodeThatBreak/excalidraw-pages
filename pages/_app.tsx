@@ -13,7 +13,8 @@ import { useState } from "react";
 import { ThemeContext, ThemeMode } from "@/provider/ThemeProvider";
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const [theme, setTheme] = useState<ThemeMode>(ThemeMode.Dark);
+  // Todo: Persist in db
+  const [theme, setTheme] = useState<ThemeMode>(ThemeMode.Light);
 
   return (
     <ApolloProvider client={apolloClient}>
