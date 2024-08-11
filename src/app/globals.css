@@ -86,3 +86,68 @@
 body {
   overscroll-behavior: none;
 }
+
+/* Remove this when fixed version is published */
+@font-face {
+  font-family: "Assistant";
+  src: url("/fonts/assets/Assistant-Regular.woff2") format("woff2");
+  font-weight: 400;
+  style: normal;
+  display: swap;
+}
+
+@font-face {
+  font-family: "Assistant";
+  src: url("/fonts/assets/Assistant-Medium.woff2") format("woff2");
+  font-weight: 500;
+  style: normal;
+  display: swap;
+}
+
+@font-face {
+  font-family: "Assistant";
+  src: url("/fonts/assets/Assistant-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  style: normal;
+  display: swap;
+}
+
+@font-face {
+  font-family: "Assistant";
+  src: url("/fonts/assets/Assistant-Bold.woff2") format("woff2");
+  font-weight: 700;
+  style: normal;
+  display: swap;
+}
+
+@font-face {
+  font-family: "Cascadia";
+  src: url("/fonts/assets/CascadiaCode-Regular.woff2") format("woff2");
+  style: normal;
+  display: swap;
+}
+@font-face {
+  font-family: "Comic Shanns";
+  src: url("/fonts/assets/ComicShanns-Regular.woff2") format("woff2");
+  style: normal;
+  display: swap;
+}
+@font-face {
+  src: url("/fonts/assets/Excalifont-Regular.woff2") format("woff2");
+  font-family: "Excalifont";
+  style: normal;
+  display: swap;
+}
+@font-face {
+  font-family: "Liberation Sans";
+  src: url("/fonts/assets/LiberationSans-Regular.woff2") format("woff2");
+  weight: 500;
+  style: normal;
+  display: swap;
+}
+@font-face {
+  font-family: "Virgil";
+  src: url("/fonts/assets/Virgil-Regular.woff2") format("woff2");
+  style: normal;
+  display: swap;
+}
