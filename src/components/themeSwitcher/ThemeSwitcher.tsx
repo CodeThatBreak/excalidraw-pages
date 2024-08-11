@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 // Components
 import { IconButton } from "@radix-ui/themes";
@@ -12,13 +12,15 @@ import { ThemeMode, useThemeContext } from "@/provider/ThemeProvider";
 const ThemeSwitcher = () => {
   const { theme, setTheme } = useThemeContext();
 
+  const onThemeToggle = useCallback(() => {
+    setTheme((prevTheme) =>
+      prevTheme === ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark
+    );
+  }, []);
+
   return (
-    <IconButton>
-      {theme === ThemeMode.Dark ? (
-        <MoonIcon size={16} onClick={() => setTheme(ThemeMode.Light)} />
-      ) : (
-        <Sun size={16} onClick={() => setTheme(ThemeMode.Dark)} />
-      )}
+    <IconButton onClick={onThemeToggle}>
+      {theme === ThemeMode.Dark ? <MoonIcon size={16} /> : <Sun size={16} />}
     </IconButton>
   );
 };
