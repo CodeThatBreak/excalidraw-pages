@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useRef } from "react";
+import { useMemo, useCallback, useRef, useEffect } from "react";
 
 // Components
 import { AppMainMenu } from "@/components/excalidraw/components/mainMenu";
@@ -16,21 +16,27 @@ import type { OnAction, OnChangeAction } from "../scene/types/action";
 
 // Constants
 import { ActionType } from "../scene/constants/actionTypes";
+import { KEYS_TO_SYNC } from "../scene/constants/stateKeys";
 
 // Hooks
 import { useDebounceCallback } from "usehooks-ts";
+import { useThemeContext } from "@/provider/ThemeProvider";
+
+// Types
 import type {
   NonDeletedExcalidrawElement,
   OrderedExcalidrawElement,
+  Theme,
 } from "@excalidraw/excalidraw/dist/excalidraw/element/types";
 import type {
   AppState,
   ExcalidrawImperativeAPI,
 } from "@excalidraw/excalidraw/dist/excalidraw/types";
+
+// Utils
 import { detectChangedElement } from "./utils/detectChangedElements";
 import { detectChangedAppState } from "./utils/detectChangedAppState";
 import { pick } from "@/app/utils/object/pick";
-import { KEYS_TO_SYNC } from "../scene/constants/stateKeys";
 
 type Props = {
   scene: Scene;
@@ -45,9 +51,11 @@ const Excalidraw = ({
   excalidrawAPI,
   excalidrawRefCallback,
 }: Props): JSX.Element => {
+  const { theme: theme } = useThemeContext() as { theme: Theme };
+
   const initialData = useMemo(
     () => ({
-      appState: { ...scene.state, name: scene.name },
+      appState: scene.state,
       elements: scene.elements,
     }),
     [scene]
@@ -112,6 +120,12 @@ const Excalidraw = ({
         onChange={debouncedOnChange}
         name={scene.name}
         autoFocus={true}
+        theme={theme}
+        UIOptions={{
+          canvasActions: {
+            toggleTheme: true,
+          },
+        }}
       >
         <AppMainMenu />
         <BackButton />

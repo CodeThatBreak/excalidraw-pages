@@ -18,7 +18,12 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ApolloProvider client={apolloClient}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
-        <Theme appearance={theme}>
+        <Theme
+          accentColor="gray"
+          grayColor="slate"
+          appearance={theme}
+          panelBackground="solid"
+        >
           <Component {...pageProps} />
         </Theme>
       </ThemeContext.Provider>
