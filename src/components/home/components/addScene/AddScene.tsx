@@ -30,7 +30,7 @@ const AddScene = (): JSX.Element => {
 
   return (
     <Button loading={loading} onClick={() => createScene()}>
-      <PlusIcon /> Add Scene
+      <PlusIcon /> Add Drawing
     </Button>
   );
 };

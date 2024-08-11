@@ -1,46 +1,34 @@
-import { useCallback, useMemo } from "react";
+import { EventHandler, MouseEventHandler, useCallback, useMemo } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { DateTime } from "luxon";
 
 // Components
 import { TruncateWithTooltip } from "@/components/ui/TruncateWithTooltip";
-import {
-  Card,
-  Inset,
-  Box,
-  Heading,
-  Text,
-  Flex,
-  IconButton,
-  Dialog,
-} from "@radix-ui/themes";
+import { Card, Inset, Box, Heading, Text, Flex } from "@radix-ui/themes";
 
 // Utils
 import { getRelativeTime } from "@/app/utils/dateTime/getRelativeTime";
 
 // Icon
-import { FileTextIcon, Trash2Icon } from "lucide-react";
+import { FileTextIcon } from "lucide-react";
 
 // Type
 import type { Scene } from "@/components/scene/types";
 import { DeleteConfirmation } from "./DeleteConfirmation";
 import { useDeleteSceneMutation } from "@/components/scene/mutation/useDeleteSceneMutation";
-import { useRouter } from "next/router";
+import { OnAction } from "@/components/home/types/action";
+import { ActionTypes } from "@/components/home/constants/actionTypes";
 
 const Preview = dynamic(() => import("./Preview").then((m) => m.Preview), {
   ssr: false,
   loading: () => <Box className="h-40" />,
 });
 
-type Props = { scene: Scene };
+type Props = { scene: Scene; onAction: OnAction };
 
-const SceneCard = ({ scene }: Props): JSX.Element => {
-  const router = useRouter();
-
+const SceneCard = ({ scene, onAction }: Props): JSX.Element => {
   const { id, updatedAt, createdAt, name } = scene;
-
-  const [deleteScene, loading] = useDeleteSceneMutation();
 
   const relativeUpdateTime = useMemo(
     () => `Edited ${getRelativeTime(updatedAt)}`,
@@ -55,23 +43,35 @@ const SceneCard = ({ scene }: Props): JSX.Element => {
     return DateTime.fromMillis(createdAt).toFormat("dd LLL yyyy");
   }, [createdAt]);
 
-  const onDelete = useCallback(
-    (event: Event) => {
-      event.preventDefault();
+  const onDelete: MouseEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
       event.stopPropagation();
-
-      deleteScene(id);
+      onAction({ type: ActionTypes.Delete, payload: id });
     },
-    [id]
+    [onAction]
+  );
+
+  const onEdit: MouseEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      event.stopPropagation();
+      onAction({ type: ActionTypes.Edit, payload: id });
+    },
+    [onAction]
   );
 
   return (
     <Link href={`/scene/${id}`}>
-      <Card>
+      <Card className="realtive">
         <Inset className="bg-white">
           <Preview scene={scene} />
           <Box className="px-4 py-2 border-t-2 border-muted h-16">
-            <Flex gap="2" align="center" justify="between" direction="row">
+            <Flex
+              className="realtive"
+              gap="2"
+              align="center"
+              justify="between"
+              direction="row"
+            >
               <Box className="overflow-hidden">
                 <TruncateWithTooltip content={name}>
                   <Heading truncate size="4" className="font-medium text-lg">
@@ -94,7 +94,7 @@ const SceneCard = ({ scene }: Props): JSX.Element => {
                   </TruncateWithTooltip>
                 </Flex>
               </Box>
-              <DeleteConfirmation onDelete={onDelete} loading={loading} />
+              <DeleteConfirmation onEdit={onEdit} onDelete={onDelete} />
             </Flex>
           </Box>
         </Inset>
