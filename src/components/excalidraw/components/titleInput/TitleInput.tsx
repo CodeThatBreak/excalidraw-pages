@@ -31,9 +31,10 @@ const TitleInput = ({ scene, onAction }: Props) => {
 
   return (
     <TextField.Root
-      className="absolute z-10 mt-4 ml-28 w-64"
+      className="absolute z-10 mt-4 ml-28 w-52 h-9 outline-none opacity-30 focus-within:opacity-100"
       defaultValue={scene.name}
       onChange={debouncedOnChange}
+      variant="soft"
     />
   );
 };
