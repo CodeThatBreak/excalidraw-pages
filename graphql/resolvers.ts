@@ -3,6 +3,7 @@ import { GraphQLJSON, GraphQLDateTime } from "graphql-scalars";
 import { Scene } from "../model/scene";
 import { Op } from "sequelize";
 import { GraphQLError } from "graphql";
+import { insertIf } from "@/utils/object/insertIf";
 
 interface FetchSceneArgs {
   id: string;
@@ -28,12 +29,29 @@ enum ErrorType {
   SCENE_NOT_FOUND = "SCENE_NOT_FOUND",
 }
 
+const SCRIBBLED_ID = "scribble";
+
 const resolvers = {
   Query: {
     fetchScene: async (_: any, args: FetchSceneArgs) => {
       const { id } = args;
+
       try {
         const scene = await Scene.findByPk(id);
+
+        if (id === SCRIBBLED_ID && !scene) {
+          const scribbleScene = await Scene.create({
+            // @ts-ignore
+            id: SCRIBBLED_ID,
+            name: "Scribble",
+            version: Date.now(),
+            elements: [],
+            state: { zoom: { value: 1 } },
+          });
+
+          return scribbleScene;
+        }
+
         if (!scene) {
           return Promise.reject(
             new GraphQLError(
@@ -51,8 +69,16 @@ const resolvers = {
       try {
         const scenes = await Scene.findAll({
           order: [["updatedAt", "DESC"]],
-          where: searchQuery ? { name: { [Op.like]: `%${searchQuery}%` } } : {},
+          where: {
+            ...insertIf(searchQuery, {
+              name: {
+                [Op.like]: `%${searchQuery}%`,
+              },
+            }),
+            id: { [Op.notIn]: [SCRIBBLED_ID] },
+          },
         });
+
         if (!scenes.length) {
           return []; // Return an empty array if no scenes are found
         }

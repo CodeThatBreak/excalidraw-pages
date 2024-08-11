@@ -3,7 +3,7 @@ import { NetworkStatus } from "@apollo/client";
 import Head from "next/head";
 
 // Components
-import { Heading, Flex } from "@radix-ui/themes";
+import { Heading, Flex, IconButton } from "@radix-ui/themes";
 import { Layout } from "@/components/layout/Layout";
 import { Search } from "@/components/home/components/search/Search";
 import { NoData } from "@/components/home/components/noData/NoData";
@@ -14,6 +14,10 @@ import { SceneGrid } from "@/components/home/components/sceneGrid/SceneGrid";
 // Custom Hooks
 import { useScenesQuery } from "@/components/home/components/sceneGrid/hook/useScenesQuery";
 import { ThemeSwitcher } from "@/components/themeSwitcher/ThemeSwitcher";
+
+// Icons
+import { SignatureIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const { data, loading, searchQuery, searchScenes, networkStatus } =
@@ -40,6 +44,11 @@ export default function Home() {
           <Search loading={searching} onSearch={searchScenes} />
           <Flex gap="1" className="flex-1" justify="end">
             <AddScene />
+            <Link href="scene/scribble">
+              <IconButton>
+                <SignatureIcon size={16} />
+              </IconButton>
+            </Link>
             <ThemeSwitcher />
           </Flex>
         </Flex>
