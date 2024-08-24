@@ -7,6 +7,9 @@ import type { Scene } from "../types";
 // Fragement
 import { SCENE_FRAGMENT } from "@/fragments/scene";
 
+// Utils
+import { insertIf } from "@/utils/object/insertIf";
+
 const UPDATE_SCENE_MUTATION = gql`
   mutation UpdateScene(
     $id: String!
@@ -29,35 +32,24 @@ export type UpdateSceneMutation = (
 const useUpdateSceneMutation = (id: string): UpdateSceneMutation => {
   const [updateSceneMutation] = useMutation<Variables>(UPDATE_SCENE_MUTATION, {
     update: (cache, _, { variables }) => {
-      if (!variables) {
-        return;
-      }
+      if (!variables) return;
 
-      const id = cache.identify({
-        __typename: "Scene",
-        id: variables.id,
-      });
+      const id = cache.identify({ __typename: "Scene", id: variables.id });
 
-      const existingScene = cache.readFragment({
+      const existingScene = cache.readFragment<Scene>({
         id,
         fragment: SCENE_FRAGMENT,
       });
-
-      const data: Partial<Scene> = {};
-
-      if (variables.elements) {
-        data.elements = variables.elements;
-      }
-
-      if (variables.state) {
-        data.state = variables.state;
-      }
 
       if (existingScene) {
         cache.writeFragment({
           id,
           fragment: SCENE_FRAGMENT,
-          data: data,
+          data: {
+            ...existingScene,
+            ...insertIf(variables.elements, variables.elements),
+            ...insertIf(variables.state, variables.state),
+          },
         });
       }
     },
