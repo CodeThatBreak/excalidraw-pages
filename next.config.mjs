@@ -10,9 +10,6 @@ const nextConfig = {
     defaultLocale: "en",
     localeDetection: false,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
 };
 
 export default nextConfig;

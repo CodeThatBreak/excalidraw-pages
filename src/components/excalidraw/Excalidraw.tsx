@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useRef, useEffect } from "react";
+import { useMemo, useCallback, useRef } from "react";
 
 // Components
 import { AppMainMenu } from "@/components/excalidraw/components/mainMenu";
@@ -104,7 +104,7 @@ const Excalidraw = ({
       }));
       previousStateRef.current = partialAppState;
     },
-    [onAction, excalidrawAPI]
+    [onAction]
   );
 
   const debouncedOnChange = useDebounceCallback(onChange, 150, {

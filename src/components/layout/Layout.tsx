@@ -26,11 +26,17 @@ const Layout = ({ children }: Props) => {
   );
 };
 
-Layout.Header = ({ children }: { children: ReactNode }): JSX.Element => (
+const LayouHeader = ({ children }: { children: ReactNode }): JSX.Element => (
   <>{children}</>
 );
-Layout.Main = ({ children }: { children: ReactNode }): JSX.Element => (
+
+const LayoutMain = ({ children }: { children: ReactNode }): JSX.Element => (
   <>{children}</>
 );
+
+Layout.Header = LayouHeader;
+Layout.Main = LayoutMain;
+
+Layout.displayName = "Layout";
 
 export { Layout };
