@@ -12,7 +12,7 @@ const NoData = ({ searchQuery = "", onAddScene }: Props): JSX.Element => {
   const heading = searchQuery ? "No Scenes Found" : "No Scenes Created";
   const description = searchQuery ? (
     <>
-      Oops! We couldn't find any scenes that match your search.
+      Oops! We couldn&apos;t find any scenes that match your search.
       <br />
       Please try a different keyword.
     </>

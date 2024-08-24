@@ -49,7 +49,7 @@ const SceneCard = ({ scene, onAction }: Props): JSX.Element => {
       event.stopPropagation();
       onAction({ type: ActionTypes.Delete, payload: id });
     },
-    [onAction]
+    [id, onAction]
   );
 
   const onEdit: MouseEventHandler<HTMLDivElement> = useCallback(
@@ -57,7 +57,7 @@ const SceneCard = ({ scene, onAction }: Props): JSX.Element => {
       event.stopPropagation();
       onAction({ type: ActionTypes.Edit, payload: id });
     },
-    [onAction]
+    [id, onAction]
   );
 
   return (

@@ -67,7 +67,7 @@ const useUpdateSceneMutation = (id: string): UpdateSceneMutation => {
     (variables) => {
       return updateSceneMutation({ variables: { ...variables, id } });
     },
-    [id]
+    [id, updateSceneMutation]
   );
 };
 

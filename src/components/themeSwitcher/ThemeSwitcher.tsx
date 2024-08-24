@@ -24,7 +24,7 @@ const ThemeSwitcher = () => {
       theme: newTheme,
     });
     setTheme(newTheme);
-  }, [theme, updatePreference]);
+  }, [setTheme, theme, updatePreference]);
 
   return (
     <IconButton onClick={onThemeToggle}>
