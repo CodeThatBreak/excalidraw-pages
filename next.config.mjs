@@ -3,11 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: [
-      "@radix-ui/themes",
-      "@excalidraw/excalidraw",
-      "usehooks-ts",
-    ],
+    optimizePackageImports: ["@radix-ui/themes", "usehooks-ts"],
   },
   i18n: {
     locales: ["en"],
