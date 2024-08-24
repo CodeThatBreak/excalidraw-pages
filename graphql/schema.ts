@@ -13,9 +13,15 @@ export const typeDefs = `
         state: JSON
     }
 
+    type Preference {
+        key:String
+        value: JSON
+    }
+
     type Query {
         fetchScene(id:String!): Scene!
         fetchScenes(searchQuery: String): [Scene!]!
+        fetchPreference(key:String): Preference
         
     }
 
@@ -23,5 +29,7 @@ export const typeDefs = `
         updateScene(id: String!, name: String, elements: JSON, state: JSON): String
         createScene: String
         deleteScene(id:String!): Boolean
-    }
+        updatePreference(key:String!, value: JSON):Boolean
+    }   
+
 `;
