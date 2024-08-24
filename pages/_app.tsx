@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 
 // Global css
@@ -26,6 +26,12 @@ function MyApp({
   pageProps,
   initialPreference,
 }: AppProps & InitialProps): JSX.Element {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  }, []);
+
   const [theme, setTheme] = useState<ThemeMode>(initialPreference.theme);
 
   return (

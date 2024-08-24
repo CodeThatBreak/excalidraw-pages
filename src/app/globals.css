@@ -87,7 +87,7 @@ body {
   overscroll-behavior: none;
 }
 
-/* Remove this when fixed version is published */
+/* Fallback when service worker fails */
 @font-face {
   font-family: "Assistant";
   src: url("/fonts/assets/Assistant-Regular.woff2") format("woff2");
