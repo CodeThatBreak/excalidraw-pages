@@ -18,13 +18,13 @@ const ThemeSwitcher = () => {
   const updatePreference = useUpdatePreference();
 
   const onThemeToggle = useCallback(() => {
-    const prevTheme =
+    const newTheme =
       theme === ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark;
     updatePreference(INITIAL_PREFERENCE, {
-      theme: prevTheme,
+      theme: newTheme,
     });
-    setTheme(prevTheme);
-  }, [theme]);
+    setTheme(newTheme);
+  }, [theme, updatePreference]);
 
   return (
     <IconButton onClick={onThemeToggle}>

@@ -11,7 +11,10 @@ const apolloClient = new ApolloClient({
   }),
   defaultOptions: {
     query: {
-      fetchPolicy: "cache-first",
+      fetchPolicy: "network-only",
+    },
+    watchQuery: {
+      fetchPolicy: "cache-and-network",
     },
   },
   link: new HttpLink({
