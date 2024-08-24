@@ -1,9 +1,16 @@
 import { DateTime } from "luxon";
 import { GraphQLJSON, GraphQLDateTime } from "graphql-scalars";
-import { Scene } from "../model/scene";
-import { Op } from "sequelize";
 import { GraphQLError } from "graphql";
+
+// Constant
+import { Op } from "sequelize";
+
+// Utils
 import { insertIf } from "@/utils/object/insertIf";
+
+// Models
+import { Scene } from "../model/scene";
+import { Preference } from "../model/preference";
 
 interface FetchSceneArgs {
   id: string;
@@ -13,12 +20,21 @@ interface FetchScenesArgs {
   searchQuery?: string;
 }
 
+interface FetchPreferenceArgs {
+  key: string;
+}
+
 interface UpdateSceneArgs {
   id: string;
   name: string;
   version: number;
   elements: any[];
   state: any;
+}
+
+interface UpdatePreferenceArgs {
+  key: string;
+  value: object;
 }
 
 interface DeleteSceneArgs {
@@ -88,6 +104,15 @@ const resolvers = {
         throw new Error("Failed to fetch scenes");
       }
     },
+
+    // Preference
+    fetchPreference: async (_: any, args: FetchPreferenceArgs) => {
+      const { key } = args;
+
+      const preference = await Preference.findOne({ where: { key } });
+
+      return preference;
+    },
   },
   JSON: GraphQLJSON,
   Date: GraphQLDateTime,
@@ -153,6 +178,15 @@ const resolvers = {
         console.error("Error updating scene:", error);
         return Promise.reject(new GraphQLError(`Unexpected error.`));
       }
+    },
+
+    // Preference
+    updatePreference: async (_: any, args: UpdatePreferenceArgs) => {
+      const { key, value } = args;
+
+      await Preference.upsert({ key, value });
+
+      return null;
     },
   },
 };
